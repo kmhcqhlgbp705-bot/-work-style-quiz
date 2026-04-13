@@ -276,7 +276,7 @@ function renderResult(typeId) {
 
 function shareText(typeId) {
   const title = TYPE_META[typeId].title;
-  return `I'm "${title}" on the Work Style Quiz—30 questions, ~8 minutes, no corporate fluff. What are you?`;
+  return `I am "${title}" on the Work Style Quiz—30 questions, ~8 minutes, no corporate fluff. What are you?`;
 }
 
 async function onShare(typeId) {
@@ -325,24 +325,37 @@ function tryRenderSharedResult() {
   return true;
 }
 
-startBtn.addEventListener("click", (event) => {
-  event.preventDefault();
-  if (!Array.isArray(QUESTIONS) || QUESTIONS.length === 0) {
-    if (loadErrorEl) {
-      loadErrorEl.hidden = false;
-      loadErrorEl.textContent =
-        "Questions are still loading. Please refresh once and try again.";
-    }
-    return;
+function setStartCtaEnabled(enabled) {
+  if (!startBtn) return;
+  const isLink = startBtn.tagName === "A" || startBtn.tagName === "a";
+  if (isLink) {
+    startBtn.classList.toggle("is-disabled", !enabled);
+    startBtn.setAttribute("aria-disabled", enabled ? "false" : "true");
+  } else {
+    startBtn.disabled = !enabled;
   }
-  showView("quiz");
-  renderQuestion();
-  focusMainContent();
-  requestAnimationFrame(() => {
-    const first = optionsEl.querySelector('input[type="radio"]');
-    if (first) first.focus();
+}
+
+if (startBtn) {
+  startBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (!Array.isArray(QUESTIONS) || QUESTIONS.length === 0) {
+      if (loadErrorEl) {
+        loadErrorEl.hidden = false;
+        loadErrorEl.textContent =
+          "Questions are still loading. Please refresh once and try again.";
+      }
+      return;
+    }
+    showView("quiz");
+    renderQuestion();
+    focusMainContent();
+    requestAnimationFrame(() => {
+      const first = optionsEl.querySelector('input[type="radio"]');
+      if (first) first.focus();
+    });
   });
-});
+}
 
 prevBtn.addEventListener("click", () => {
   if (state.index === 0) return;
@@ -424,6 +437,7 @@ async function fetchQuestionsJson() {
 }
 
 async function bootstrap() {
+  setStartCtaEnabled(false);
   /* Embedded JSON first (file:// / flaky networks). Then network JSON (Cloudflare Pages). */
   let data = loadEmbeddedQuestions();
   if (!data) data = await fetchQuestionsJson();
@@ -435,21 +449,17 @@ async function bootstrap() {
         ? "Could not read questions. If you see this, the page may be missing the embedded data block—open <code>index.html</code> from the <code>work-style-quiz</code> folder or run: <code>cd work-style-quiz &amp;&amp; python3 -m http.server 8080</code> then visit <code>http://127.0.0.1:8080/</code>."
         : "Could not load questions. Check network, then hard-refresh. If you use Cloudflare, turn off Rocket Loader or ensure <code>questions.json</code> is deployed next to <code>index.html</code>.";
     }
-    if (startBtn) startBtn.disabled = true;
+    setStartCtaEnabled(false);
     return;
   }
   QUESTIONS = data;
   state.answers = Array(QUESTIONS.length).fill(null);
   if (loadErrorEl) loadErrorEl.hidden = true;
-  if (startBtn) startBtn.disabled = false;
+  setStartCtaEnabled(true);
 
   if (!tryRenderSharedResult()) {
     showView("landing");
   }
 }
 
-bootstrap();
-
-window.addEventListener("load", () => {
-  if (QUESTIONS.length === 0) void bootstrap();
-});
+void bootstrap();

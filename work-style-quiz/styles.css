@@ -585,9 +585,15 @@ body {
   box-shadow: 0 4px 14px rgba(51, 164, 116, 0.35);
 }
 
-.btn-cta:hover:not(:disabled) {
+.btn-cta:hover:not(:disabled):not(.is-disabled) {
   background: var(--green-hover);
   transform: translateY(-1px);
+}
+
+a.btn-cta.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .btn-cta-inline {

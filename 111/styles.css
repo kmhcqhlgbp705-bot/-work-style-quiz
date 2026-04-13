@@ -963,14 +963,20 @@ body {
   box-shadow: var(--shadow-cta);
 }
 
-.btn-cta:hover:not(:disabled) {
+.btn-cta:hover:not(:disabled):not(.is-disabled) {
   background: var(--green-hover);
   transform: translateY(-1px);
   box-shadow: 0 8px 26px rgba(51, 164, 116, 0.45);
 }
 
-.btn-cta:active:not(:disabled) {
+.btn-cta:active:not(:disabled):not(.is-disabled) {
   transform: translateY(0);
+}
+
+a.btn-cta.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .btn-cta-inline {
