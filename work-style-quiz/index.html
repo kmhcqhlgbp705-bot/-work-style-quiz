@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#eef4f4" />
+    <title>Work Style Quiz</title>
+    <meta
+      name="description"
+      content="Answer 30 quick questions to discover your strengths, ideal work environment, and collaboration style."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;0,6..12,800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="./index.html" class="logo" aria-label="Work Style Quiz home">
+          <span class="logo-mark" aria-hidden="true">
+            <span class="dot dot--forest"></span>
+            <span class="dot dot--teal"></span>
+            <span class="dot dot--amber"></span>
+            <span class="dot dot--green"></span>
+            <span class="dot dot--forest"></span>
+            <span class="dot dot--teal"></span>
+          </span>
+          <span class="logo-text">Work Style Quiz</span>
+        </a>
+        <nav class="header-nav" aria-label="Site">
+          <span class="nav-muted">Free · No signup</span>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="main" tabindex="-1">
+      <p id="load-error" class="load-error" role="alert" hidden></p>
+
+      <div class="container">
+        <section
+          id="landing"
+          class="landing-hero"
+          aria-label="Introduction"
+        >
+          <div class="landing-hero-inner">
+            <div class="landing-copy">
+              <h1>
+                What is your Work Style?
+              </h1>
+              <p class="landing-lead">
+                Answer 30 quick questions to discover your strengths, ideal work
+                environment, and collaboration style.
+              </p>
+              <div class="landing-cta-row">
+                <button id="start-btn" class="btn btn-cta" type="button" disabled>
+                  See My Work Style
+                </button>
+              </div>
+              <p class="landing-meta">
+                30 questions · 8–12 min · No signup
+              </p>
+            </div>
+            <div class="landing-art" aria-hidden="true">
+              <div class="art-scene">
+                <div class="art-hill"></div>
+                <div class="art-sun"></div>
+                <div class="art-figure art-figure--1"></div>
+                <div class="art-figure art-figure--2"></div>
+                <div class="art-figure art-figure--3"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proof-strip" role="group" aria-label="Quiz facts">
+            <div class="proof-item">
+              <span class="proof-value">30</span>
+              <span class="proof-label">Questions</span>
+            </div>
+            <div class="proof-item">
+              <span class="proof-value">6</span>
+              <span class="proof-label">Work styles</span>
+            </div>
+            <div class="proof-item">
+              <span class="proof-value">8–12</span>
+              <span class="proof-label">Minutes</span>
+            </div>
+            <div class="proof-item">
+              <span class="proof-value">0</span>
+              <span class="proof-label">Login</span>
+            </div>
+          </div>
+        </section>
+
+        <section id="landing-details" class="card landing-details">
+          <h2 class="section-title">Six work styles</h2>
+          <p class="section-sub">
+            Each result is a short archetype—built for sharing, not clinical labels.
+          </p>
+          <div id="style-preview" class="landing-preview-grid">
+            <article class="preview-card preview-card--forest">
+              <h3>The Deep Focus Builder</h3>
+              <p>Best when focus time is protected and interruptions stay low.</p>
+            </article>
+            <article class="preview-card preview-card--teal">
+              <h3>The Collaborative Spark</h3>
+              <p>Thrives in live brainstorming and fast team alignment.</p>
+            </article>
+            <article class="preview-card preview-card--amber">
+              <h3>The Systems Orchestrator</h3>
+              <p>Creates clarity with structure, process, and ownership.</p>
+            </article>
+            <article class="preview-card preview-card--green">
+              <h3>The Nimble Navigator</h3>
+              <p>Adapts quickly and keeps momentum under uncertainty.</p>
+            </article>
+            <article class="preview-card preview-card--forest">
+              <h3>The People Connector</h3>
+              <p>Builds trust and keeps collaboration healthy.</p>
+            </article>
+            <article class="preview-card preview-card--teal">
+              <h3>The Independent Owner</h3>
+              <p>Delivers outcomes with high autonomy and accountability.</p>
+            </article>
+          </div>
+          <div class="result-sample">
+            <p class="eyebrow">Sample result</p>
+            <h3>The Deep Focus Builder</h3>
+            <p>
+              You perform best in quiet, structured focus blocks with clear goals
+              and async-first collaboration.
+            </p>
+          </div>
+
+          <p class="disclaimer disclaimer-subtle">
+            This quiz is for entertainment and self-reflection only. It is not
+            professional career, psychological, or legal advice.
+          </p>
+        </section>
+
+        <section
+          id="quiz"
+          class="card card-quiz hidden"
+          aria-labelledby="quiz-heading"
+        >
+          <h2 id="quiz-heading" class="visually-hidden">Quiz</h2>
+          <div class="progress-wrap">
+            <div class="progress-meta">
+              <span id="progress-text">Question 1 / 30</span>
+              <span id="answered-text">Answered 0 / 30</span>
+            </div>
+            <div
+              class="progress-track"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              aria-label="Quiz progress"
+            >
+              <div id="progress-bar" class="progress-bar"></div>
+            </div>
+          </div>
+
+          <h2 id="question-title" class="question-title"></h2>
+          <div id="options" class="options-wrap"></div>
+
+          <div class="actions">
+            <button id="prev-btn" class="btn btn-outline" type="button">
+              Previous
+            </button>
+            <button id="next-btn" class="btn btn-cta btn-cta-inline" type="button">
+              Next
+            </button>
+          </div>
+        </section>
+
+        <section
+          id="result"
+          class="card card-result hidden"
+          aria-label="Your result"
+        >
+          <div class="result-hero">
+            <p class="eyebrow">Your result</p>
+            <h2 id="result-title" class="result-headline" tabindex="-1"></h2>
+            <p id="result-tagline" class="result-tagline"></p>
+          </div>
+
+          <div class="result-grid">
+            <div class="result-panel">
+              <h3>Strengths</h3>
+              <ul id="result-strengths"></ul>
+            </div>
+            <div class="result-panel">
+              <h3>Watch-outs</h3>
+              <ul id="result-watchouts"></ul>
+            </div>
+            <div class="result-panel">
+              <h3>Best environment</h3>
+              <p id="result-environment"></p>
+            </div>
+            <div class="result-panel">
+              <h3>Collaboration style</h3>
+              <p id="result-collaboration"></p>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="share-btn" class="btn btn-cta" type="button">Share</button>
+            <button id="copy-btn" class="btn btn-outline" type="button">
+              Copy result link
+            </button>
+            <button id="retake-btn" class="btn btn-outline" type="button">
+              Retake
+            </button>
+          </div>
+          <p id="feedback" class="feedback" aria-live="polite"></p>
+          <p class="disclaimer">
+            This quiz is for entertainment and self-reflection only. It is not
+            professional career, psychological, or legal advice.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Inspired by common personality-test landing patterns—not affiliated with
+        any third-party test.
+      </p>
+    </footer>
+
+    <script type="application/json" id="questions-embed">
+[
+  {
+    "text": "Your ideal workweek rhythm is…",
+    "options": [
+      {
+        "text": "Long quiet blocks; meetings are exceptions.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Lots of co-working time and live discussions.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Predictable rituals: standups, docs, handoffs.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Plans change often; I adapt day by day.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "When a project starts, you first want…",
+    "options": [
+      {
+        "text": "A written brief and owners for each piece.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "A kickoff that gets everyone aligned emotionally.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Freedom to explore before commitments.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "A whiteboard session to shape the idea together.",
+        "typeId": "collab_spark"
+      }
+    ]
+  },
+  {
+    "text": "Feedback that helps you most sounds like…",
+    "options": [
+      {
+        "text": "“Here’s exactly what to change next time.”",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "“Here’s how this landed for the team.”",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "“Take another pass when you’re in flow.”",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "“Let’s try a quick experiment and see.”",
+        "typeId": "collab_spark"
+      }
+    ]
+  },
+  {
+    "text": "Your nightmare workday includes…",
+    "options": [
+      {
+        "text": "Constant pings with no time to think.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Silent solo work all day with no collaboration.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Chaos: no roles, no written decisions.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Rigid process when the situation already changed.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "In meetings, you naturally…",
+    "options": [
+      {
+        "text": "Take notes and turn chaos into next steps.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Make sure quieter voices are heard.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Prefer async updates instead of another call.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Push for a decision and move on.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "You feel most trusted when a manager…",
+    "options": [
+      {
+        "text": "Sets clear outcomes and gets out of the way.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Checks in on how you’re doing, not just tasks.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Protects your calendar for deep work.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Creates space for the team to ideate together.",
+        "typeId": "collab_spark"
+      }
+    ]
+  },
+  {
+    "text": "Under a tight deadline, you…",
+    "options": [
+      {
+        "text": "Cut scope and ship something real.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Lock in a plan and execute calmly.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Go heads-down and minimize noise.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Pull the right people in to unblock fast.",
+        "typeId": "people_connector"
+      }
+    ]
+  },
+  {
+    "text": "Your favorite collaboration setup is…",
+    "options": [
+      {
+        "text": "Shared docs with clear owners.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Live calls and real-time brainstorming.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Async threads; reply on my own time.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Minimal tools; I own the outcome end-to-end.",
+        "typeId": "independent_owner"
+      }
+    ]
+  },
+  {
+    "text": "Conflict on the team makes you…",
+    "options": [
+      {
+        "text": "Step in to clarify facts and next steps.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Talk privately to rebuild trust first.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Prefer to step away until it’s calmer.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Address it quickly so we don’t stall.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "You’d rather be evaluated on…",
+    "options": [
+      {
+        "text": "Reliable delivery against commitments.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "The quality of relationships you build.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Impact you drove with autonomy.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Creativity and ideas brought to the group.",
+        "typeId": "collab_spark"
+      }
+    ]
+  },
+  {
+    "text": "“Remote vs office” for you is really about…",
+    "options": [
+      {
+        "text": "Controlling interruptions and deep work.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Energy from being around people.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Freedom to structure my own day.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Whatever helps the team move fastest today.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "Your career happiness spikes when…",
+    "options": [
+      {
+        "text": "You can own a problem end-to-end.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "The team feels safe and aligned.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "The system runs smoothly without heroics.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "You’re learning fast in a changing environment.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "When you learn something new for work, you prefer to…",
+    "options": [
+      {
+        "text": "Read quietly and practice alone first.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Pair with someone and learn by doing together.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Follow a structured course or checklist.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Jump into a real task and fix gaps as you go.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "A vague goal with no metrics feels…",
+    "options": [
+      {
+        "text": "Fine if I can carve focus time to figure it out.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Exciting if we can workshop it as a group.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Uncomfortable until we define owners and milestones.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Normal; clarity can emerge while we move.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "Your default reaction to a new company process is…",
+    "options": [
+      {
+        "text": "“Will this protect my focus time?”",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "“How will this affect team vibes?”",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "“Show me the RACI and the template.”",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "“We’ll probably rewrite it in two weeks anyway.”",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "The best praise you can get is…",
+    "options": [
+      {
+        "text": "“You delivered—no drama.”",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "“You made the team feel unstuck.”",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "“Your doc made everything obvious.”",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "“Your idea changed the room.”",
+        "typeId": "collab_spark"
+      }
+    ]
+  },
+  {
+    "text": "After a stressful week, you recharge by…",
+    "options": [
+      {
+        "text": "Long offline time with zero work chat.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Talking it out with a trusted colleague.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Tidying your tasks and inbox so Monday is clean.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Starting something new to regain momentum.",
+        "typeId": "people_connector"
+      }
+    ]
+  },
+  {
+    "text": "Your ideal team size for daily work is…",
+    "options": [
+      {
+        "text": "Small enough that I can own a slice solo.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Big enough for energy, small enough to know everyone.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Large if roles and interfaces are clear.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Whatever ships fastest for this phase.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "You get skeptical when leadership says…",
+    "options": [
+      {
+        "text": "“We’ll figure out the details later.” (with no owner)",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "“Just be available all day on Slack.”",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "“Process for process’s sake.”",
+        "typeId": "nimble_navigator"
+      },
+      {
+        "text": "“Don’t worry about how people feel.”",
+        "typeId": "people_connector"
+      }
+    ]
+  },
+  {
+    "text": "In a brainstorm, you’re most likely to…",
+    "options": [
+      {
+        "text": "Build on others’ ideas in real time.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Ask the question that names the tradeoff.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Stay quiet until you have one sharp idea.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Suggest a cheap test before a big debate.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "You respect a coworker who…",
+    "options": [
+      {
+        "text": "Doesn’t need hand-holding and still communicates clearly.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Makes hard conversations feel safer.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Writes decisions down so nobody is guessing.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Turns ambiguity into a prototype.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "Your “productive morning” usually means…",
+    "options": [
+      {
+        "text": "Two hours of uninterrupted work before chat.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "A quick sync to align the team’s energy.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Checking the plan and updating the board.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Picking the highest-leverage move and switching fast.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "If you disagree with a popular plan, you…",
+    "options": [
+      {
+        "text": "Write a clear alternative with tradeoffs.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Talk to key people 1:1 before the room decides.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Opt out of the debate and prove it with work.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Challenge it live so the group can react.",
+        "typeId": "collab_spark"
+      }
+    ]
+  },
+  {
+    "text": "“Scope creep” to you sounds like…",
+    "options": [
+      {
+        "text": "A focus problem unless someone says no.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "A people problem if expectations weren’t shared.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "A planning problem: change control needed.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Sometimes the signal that we should pivot.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "You feel most productive in a workplace that…",
+    "options": [
+      {
+        "text": "Lets me block deep work without guilt.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Has lively collaboration spaces.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Has clear norms and written agreements.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Rewards speed of learning over perfection.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "Your 1:1 with a manager should mostly be about…",
+    "options": [
+      {
+        "text": "Removing blockers and clarifying ownership.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "How you’re doing as a human, not only output.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Priorities, timelines, and expectations.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "What experiments to run next week.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "When documentation is missing, you…",
+    "options": [
+      {
+        "text": "Create the minimum doc so future-you survives.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Pull people together to align verbally first.",
+        "typeId": "collab_spark"
+      },
+      {
+        "text": "Prefer to stay in flow and document later.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Ship something small and document what broke.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "You’re happiest when your role is…",
+    "options": [
+      {
+        "text": "A clear lane you can run end-to-end.",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "A glue role that helps others succeed.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "A stabilizer who makes the machine work.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "A scout in changing terrain.",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  },
+  {
+    "text": "“Good collaboration” to you means…",
+    "options": [
+      {
+        "text": "Fewer meetings, clearer handoffs.",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Psychological safety and honest dialogue.",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Shared definitions of done and who decides what.",
+        "typeId": "systems_orchestrator"
+      },
+      {
+        "text": "Rapid feedback loops and quick iterations.",
+        "typeId": "collab_spark"
+      }
+    ]
+  },
+  {
+    "text": "If you had to pick your strongest professional edge, it would be…",
+    "options": [
+      {
+        "text": "Sustained focus on hard problems",
+        "typeId": "deep_focus"
+      },
+      {
+        "text": "Building trust and helping people feel heard",
+        "typeId": "people_connector"
+      },
+      {
+        "text": "Owning outcomes without needing oversight",
+        "typeId": "independent_owner"
+      },
+      {
+        "text": "Staying adaptable when everything shifts",
+        "typeId": "nimble_navigator"
+      }
+    ]
+  }
+]
+</script>
+    <script src="./app.js"></script>
+  </body>
+</html>

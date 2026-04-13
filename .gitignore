@@ -1,0 +1,8 @@
+# Large / vendored tree (remove this line if you need it in the repo)
+openclow/
+
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
