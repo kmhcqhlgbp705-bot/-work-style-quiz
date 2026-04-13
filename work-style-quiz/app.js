@@ -361,30 +361,64 @@ retakeBtn.addEventListener("click", () => {
 
 function loadEmbeddedQuestions() {
   const el = document.getElementById("questions-embed");
-  if (!el || !el.textContent.trim()) return null;
+  if (!el) return null;
+  const raw = (el.textContent || "").trim();
+  if (!raw) return null;
   try {
-    return JSON.parse(el.textContent);
+    return JSON.parse(raw);
   } catch {
     return null;
   }
 }
 
-async function bootstrap() {
-  let data = null;
+function questionJsonFetchUrls() {
+  const urls = [];
   try {
-    const res = await fetch("./questions.json", { cache: "no-store" });
-    if (res.ok) data = await res.json();
+    urls.push(new URL("questions.json", window.location.href).href);
   } catch {
-    /* file:// or offline */
+    /* ignore */
   }
-  if (!data) data = loadEmbeddedQuestions();
+  if (window.location && window.location.origin) {
+    urls.push(`${window.location.origin}/questions.json`);
+  }
+  return [...new Set(urls)];
+}
+
+async function fetchQuestionsJson() {
+  const urls = questionJsonFetchUrls();
+  if (urls.length === 0) return null;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 15000);
+  try {
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, {
+          cache: "no-store",
+          signal: ctrl.signal,
+        });
+        if (!res.ok) continue;
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) return data;
+      } catch {
+        /* try next URL */
+      }
+    }
+  } finally {
+    clearTimeout(timer);
+  }
+  return null;
+}
+
+async function bootstrap() {
+  let data = loadEmbeddedQuestions();
+  if (!data) data = await fetchQuestionsJson();
   if (!data) {
     if (loadErrorEl) {
       loadErrorEl.hidden = false;
       const isFile = window.location.protocol === "file:";
       loadErrorEl.innerHTML = isFile
         ? "Could not read questions. If you see this, the page may be missing the embedded data block—open <code>index.html</code> from the <code>work-style-quiz</code> folder or run: <code>cd work-style-quiz &amp;&amp; python3 -m http.server 8080</code> then visit <code>http://127.0.0.1:8080/</code>."
-        : "Could not load questions.json. Check that you are serving this folder over HTTP (e.g. <code>python3 -m http.server</code> from the <code>work-style-quiz</code> folder) and refresh.";
+        : "Could not load questions. Check network, then hard-refresh. If you use Cloudflare, turn off Rocket Loader or ensure <code>questions.json</code> is deployed next to <code>index.html</code>.";
     }
     if (startBtn) startBtn.disabled = true;
     return;

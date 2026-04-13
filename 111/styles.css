@@ -932,6 +932,9 @@ body {
 }
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: inherit;
   font-weight: 800;
   font-size: 1rem;
@@ -940,6 +943,7 @@ body {
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  text-decoration: none;
   transition: background 0.2s var(--ease-out), transform 0.18s var(--ease-press),
     box-shadow 0.2s var(--ease-out);
 }

@@ -60,9 +60,9 @@
                 environment, and collaboration style.
               </p>
               <div class="landing-cta-row">
-                <button id="start-btn" class="btn btn-cta" type="button" disabled>
+                <a id="start-btn" class="btn btn-cta" href="#quiz" role="button">
                   See My Work Style
-                </button>
+                </a>
               </div>
               <p class="landing-meta">
                 30 questions · 8–12 min · No signup
@@ -236,7 +236,11 @@
       </p>
     </footer>
 
-    <script type="application/json" id="questions-embed">
+    <script
+      type="application/json"
+      id="questions-embed"
+      data-cfasync="false"
+    >
 [
   {
     "text": "Your ideal workweek rhythm is…",
@@ -870,6 +874,6 @@
   }
 ]
 </script>
-    <script src="./app.js"></script>
+    <script src="./app.js" data-cfasync="false"></script>
   </body>
 </html>
