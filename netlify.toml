@@ -1,0 +1,3 @@
+# Static site: work-style-quiz (HTML/CSS/JS, no build)
+[build]
+  publish = "work-style-quiz"
