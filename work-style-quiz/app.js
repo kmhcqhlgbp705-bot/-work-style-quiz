@@ -170,6 +170,18 @@ function showView(view) {
   resultEl.classList.toggle("hidden", view !== "result");
 }
 
+function isHashQuiz() {
+  return (window.location.hash || "").toLowerCase() === "#quiz";
+}
+
+/** Keeps share links like /#quiz in sync; replaceState does not fire hashchange. */
+function setQuizHashInUrl() {
+  const base = `${window.location.pathname}${window.location.search}`;
+  if (window.location.hash !== "#quiz") {
+    window.history.replaceState(null, "", `${base}#quiz`);
+  }
+}
+
 function renderQuestion() {
   const question = QUESTIONS[state.index];
   const answer = state.answers[state.index];
@@ -266,6 +278,7 @@ function renderResult(typeId) {
 
   const url = new URL(window.location.href);
   url.searchParams.set("result", profile.slug);
+  url.hash = "";
   window.history.replaceState({}, "", url);
 }
 
@@ -345,6 +358,7 @@ if (startBtn) {
       return;
     }
     showView("quiz");
+    setQuizHashInUrl();
     renderQuestion();
     focusMainContent();
     requestAnimationFrame(() => {
@@ -378,6 +392,7 @@ retakeBtn.addEventListener("click", () => {
   state.answers = Array(QUESTIONS.length).fill(null);
   const url = new URL(window.location.href);
   url.searchParams.delete("result");
+  url.hash = "";
   window.history.replaceState({}, "", url);
   showView("landing");
   feedbackEl.textContent = "";
@@ -454,8 +469,30 @@ async function bootstrap() {
   setStartCtaEnabled(true);
 
   if (!tryRenderSharedResult()) {
-    showView("landing");
+    if (isHashQuiz()) {
+      showView("quiz");
+      renderQuestion();
+      focusMainContent();
+    } else {
+      showView("landing");
+    }
   }
 }
+
+window.addEventListener("hashchange", () => {
+  if (!Array.isArray(QUESTIONS) || QUESTIONS.length === 0) return;
+  if (new URLSearchParams(window.location.search).get("result")) return;
+  if (isHashQuiz()) {
+    showView("quiz");
+    renderQuestion();
+    focusMainContent();
+    requestAnimationFrame(() => {
+      const first = optionsEl.querySelector('input[type="radio"]');
+      if (first) first.focus();
+    });
+  } else {
+    showView("landing");
+  }
+});
 
 void bootstrap();
